@@ -8,7 +8,7 @@ import time
 health_bp = Blueprint('health', __name__)
 
 @health_bp.route('/')
-def health_check():
+def health_check_status():
     return jsonify({"status": "ok"}), 200
 
 @health_bp.route('/health')
