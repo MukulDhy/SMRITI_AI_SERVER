@@ -1,11 +1,29 @@
-# requirements.txt
+# Core Flask dependencies
 Flask==3.0.0
 Flask-CORS==4.0.0
 Werkzeug==3.0.1
-psutil==5.9.6
 gunicorn==21.2.0
 python-dotenv==1.0.0
 
+# Whisper and ML dependencies (CPU-only for free tier)
+# openai-whisper==20231117
+# torch==2.1.0+cpu --index-url https://download.pytorch.org/whl/cpu
+# torchaudio==2.1.0+cpu --index-url https://download.pytorch.org/whl/cpu
+# torchvision==0.16.0+cpu --index-url https://download.pytorch.org/whl/cpu
+
+# Additional dependencies for Whisper
+# numpy>=1.21.0
+# tiktoken>=0.3.1
+# regex
+# ffmpeg-python
+
+openai-whisper @ git+https://github.com/openai/whisper.git
+torch==2.2.2
+
+
+
+# System monitoring (optional, useful for debugging)
+# psutil==5.9.6
 # Optional dependencies (uncomment as needed)
 # Flask-SQLAlchemy==3.1.1        # For database support
 # Flask-Migrate==4.0.5           # For database migrations

@@ -11,6 +11,7 @@ import uuid
 # Import blueprints for different services
 from routes.health import health_bp
 from routes.api_v1 import api_v1_bp
+from routes.voice_assistant import voice_assistant_bp
 from config import Config
 from utils.logger import setup_logging
 from utils.middleware import request_middleware
@@ -26,8 +27,12 @@ def create_app(config_class=Config):
     # Trust proxy headers (important for Render deployment)
     app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
     
-    # Enable CORS
-    CORS(app, origins=app.config.get('CORS_ORIGINS', ['*']))
+    # Enable CORS - Accept requests from anywhere
+    CORS(app, 
+         origins=['*'],
+         methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+         allow_headers=['*'],
+         supports_credentials=True)
     
     # Register middleware
     request_middleware(app)
@@ -35,12 +40,23 @@ def create_app(config_class=Config):
     # Register blueprints
     app.register_blueprint(health_bp)
     app.register_blueprint(api_v1_bp, url_prefix='/api/v1')
+    app.register_blueprint(voice_assistant_bp, url_prefix='/api/v1/ai')
     
     # Error handlers
     register_error_handlers(app)
     
     # Request/Response logging
     register_request_logging(app)
+    
+    # Handle CORS preflight requests
+    @app.before_request
+    def handle_preflight():
+        if request.method == "OPTIONS":
+            response = jsonify({'status': 'ok'})
+            response.headers.add("Access-Control-Allow-Origin", "*")
+            response.headers.add("Access-Control-Allow-Headers", "*")
+            response.headers.add("Access-Control-Allow-Methods", "*")
+            return response
     
     return app
 
@@ -100,12 +116,17 @@ def register_request_logging(app):
         response.headers['X-Request-ID'] = g.request_id
         response.headers['X-Response-Time'] = f"{duration:.3f}s"
         
+        # Ensure CORS headers for all responses
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+        response.headers['Access-Control-Allow-Headers'] = '*'
+        
         return response
 
 # Main entry point
 if __name__ == '__main__':
     app = create_app()
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get('PORT', 6969))
     
     app.logger.info(f"Starting Flask server on port {port}")
     app.run(
