@@ -24,17 +24,17 @@ def request_middleware(app):
             headers = dict(request.headers)
             current_app.logger.debug(f"[{g.request_id}] Headers: {json.dumps(headers, indent=2)}")
 
-        # 🔒 Enforce API key in Authorization header
-        required_api_key = "Bearer 563@2323re2f2421fewkvn0913u4hfkenrwjlfmw"
-        auth_header = request.headers.get("Authorization")
-        if auth_header != required_api_key:
-            current_app.logger.warning(
-                f"[{g.request_id}] Unauthorized access attempt - Invalid or missing API key"
-            )
-            return jsonify({
-                'error': 'Unauthorized. Invalid or missing API key.',
-                'status_code': 401
-            }), 401
+        # # 🔒 Enforce API key in Authorization header
+        # required_api_key = "Bearer 563@2323re2f2421fewkvn0913u4hfkenrwjlfmw"
+        # auth_header = request.headers.get("Authorization")
+        # if auth_header != required_api_key:
+        #     current_app.logger.warning(
+        #         f"[{g.request_id}] Unauthorized access attempt - Invalid or missing API key"
+        #     )
+        #     return jsonify({
+        #         'error': 'Unauthorized. Invalid or missing API key.',
+        #         'status_code': 401
+        #     }), 401
 
         # Log request body for POST/PUT/PATCH
         if request.method in ['POST', 'PUT', 'PATCH'] and request.is_json:
