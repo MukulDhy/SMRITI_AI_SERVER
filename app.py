@@ -123,14 +123,17 @@ def register_request_logging(app):
         
         return response
 
-# # Main entry point
-# if __name__ == '__main__':
-#     app = create_app()
-#     port = int(os.environ.get('PORT', 6969))
+# Create the app instance for Gunicorn - THIS IS THE KEY ADDITION
+app = create_app()
+
+# Main entry point for development
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))
     
-#     app.logger.info(f"Starting Flask server on port {port}")
-#     app.run(
-#         host='0.0.0.0',
-#         port=port,
-#         debug=app.config.get('DEBUG', False)
-#     )
+    app.logger.info(f"Starting Flask server on port {port}")
+    app.run(
+        host='0.0.0.0',
+        port=port,
+        debug=False
+        # debug=app.config.get('DEBUG', False)
+    )
