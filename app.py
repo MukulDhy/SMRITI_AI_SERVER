@@ -123,14 +123,14 @@ def register_request_logging(app):
         
         return response
 
-# Main entry point
-if __name__ == '__main__':
-    app = create_app()
-    port = int(os.environ.get('PORT', 6969))
+# # Main entry point
+# if __name__ == '__main__':
+#     app = create_app()
+#     port = int(os.environ.get('PORT', 6969))
     
-    app.logger.info(f"Starting Flask server on port {port}")
-    app.run(
-        host='0.0.0.0',
-        port=port,
-        debug=app.config.get('DEBUG', False)
-    )
+#     app.logger.info(f"Starting Flask server on port {port}")
+#     app.run(
+#         host='0.0.0.0',
+#         port=port,
+#         debug=app.config.get('DEBUG', False)
+#     )
