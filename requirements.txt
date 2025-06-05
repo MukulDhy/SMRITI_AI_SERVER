@@ -1,0 +1,20 @@
+# requirements.txt
+Flask==3.0.0
+Flask-CORS==4.0.0
+Werkzeug==3.0.1
+psutil==5.9.6
+gunicorn==21.2.0
+python-dotenv==1.0.0
+
+# Optional dependencies (uncomment as needed)
+# Flask-SQLAlchemy==3.1.1        # For database support
+# Flask-Migrate==4.0.5           # For database migrations
+# Redis==5.0.1                   # For Redis support
+# Flask-JWT-Extended==4.6.0      # For JWT authentication
+# Flask-Limiter==3.5.0           # For advanced rate limiting
+# celery==5.3.4                  # For background tasks
+# requests==2.31.0               # For external API calls
+# python-multipart==0.0.6       # For file uploads
+# Pillow==10.1.0                 # For image processing
+# pandas==2.1.4                  # For data processing
+# numpy==1.26.2                  # For numerical operations
