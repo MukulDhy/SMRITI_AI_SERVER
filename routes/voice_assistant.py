@@ -31,7 +31,7 @@ SUPPORTED_LANGUAGES = {
     'as': 'Assamese',
     'ur': 'Urdu'
 }
-
+model = whisper.load_model("tiny")
 def load_whisper_model():
     """Load Whisper model with error handling for Render environment"""
     global model
